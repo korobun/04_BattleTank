@@ -5,8 +5,10 @@
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
 #include "Components/StaticMeshComponent.h"
+#include "Kismet/GameplayStatics.h"
 #include "AimingComponent.generated.h"
 
+class UTankBarrel;
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class BATTLETANK_API UAimingComponent : public UActorComponent
@@ -16,9 +18,9 @@ class BATTLETANK_API UAimingComponent : public UActorComponent
 public:	
 	// Sets default values for this component's properties
 	UAimingComponent();
-	void AimAt(FVector HitLocation);
+	void AimAt(FVector HitLocation, float LaunchSpeed);
 
-	void SetBarrel(UStaticMeshComponent* BarrelReference);
+	void SetBarrel(UTankBarrel* BarrelReference);
 
 protected:
 	// Called when the game starts
@@ -28,5 +30,8 @@ private:
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
-	UStaticMeshComponent* Barrel = nullptr;		
+	UTankBarrel* Barrel = nullptr;	
+
+	void MoveBarrelToward(FVector);
+
 };
